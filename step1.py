@@ -11,6 +11,7 @@ import glob
 from pathlib import Path
 import pandas
 import pdfplumber
+from tqdm import tqdm
 import json
 
 # Путь до рабочей папки 
@@ -57,7 +58,7 @@ def find_pages(pdf_paths, t_number, t_names):
 
         table_found = False  # найдена или нет таблица 
         with pdfplumber.open(pdf_path) as pdf:
-            for p_number in range(PAGE_NUMBER_MIN, len(pdf.pages)):
+            for p_number in tqdm(range(PAGE_NUMBER_MIN, len(pdf.pages))):
                 page = pdf.pages[p_number]
                 text = page.extract_text()
                 if t_number in text and all(t_name in text for t_name in t_names):
@@ -109,6 +110,8 @@ def main(t_names_file):
     
         with open(pages_file_path, 'w', encoding='utf-8') as fp:
             json.dump(pages_in_files, fp, ensure_ascii=False, indent=4)
+
+        print(f"Записали файл {pages_file_path}")
 
 
 if __name__ == "__main__":
