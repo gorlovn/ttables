@@ -18,7 +18,6 @@ CWD = os.getcwd()
 # Путь до папки с данными
 DATA_PATH = os.path.join(CWD, 'data')
 
-
 # Продолжение таблицы 
 TABLE_CONTINUED = "续表"
 
